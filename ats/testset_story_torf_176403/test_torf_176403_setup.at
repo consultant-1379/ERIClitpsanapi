@@ -1,0 +1,12 @@
+litp create -t os-profile -p /software/profiles/rhel_6_4 -o name=sample-profile version=rhel6 path=/var/www/html/6.4/os/x86_64/ arch=x86_64 breed=redhat
+litp create -t storage-profile-base -p /infrastructure/storage/storage_profiles/sp1
+
+litp create -t system -p /infrastructure/systems/s1 -o system_name=sample-system1
+litp create -t deployment -p /deployments/d1
+litp create -t cluster -p /deployments/d1/clusters/c1
+litp create -t node -p /deployments/d1/clusters/c1/nodes/n1 -o hostname="node1"
+litp create -t network-interface -p /deployments/d1/clusters/c1/nodes/n1/network_interfaces/nic1
+
+litp inherit -p /deployments/d1/clusters/c1/nodes/n1/os -s /software/profiles/rhel_6_4
+litp inherit -p /deployments/d1/clusters/c1/nodes/n1/system -s /infrastructure/systems/s1
+litp inherit -p /deployments/d1/clusters/c1/nodes/n1/storage_profile -s /infrastructure/storage/storage_profiles/sp1

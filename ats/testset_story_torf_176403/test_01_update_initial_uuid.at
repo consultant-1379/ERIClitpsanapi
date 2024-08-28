@@ -1,0 +1,7 @@
+runLitpScript test_torf_176403_setup.at
+
+litp create -t lun-disk -p /infrastructure/systems/s1/disks/d1 -o lun_name=hd1 name=sda size=10M storage_container=pool01 bootable=true
+
+assertError --err_type DoNothingPlanError --err_message 'Create plan failed: no tasks were generated' create_plan
+assertState -p /infrastructure/systems/s1/disks/d1 Initial
+litp update -p /infrastructure/systems/s1/disks/d1 -o uuid=00:11:22:33:44:55:66:77:88:99:aa:bb:cc:dd:ee:ff

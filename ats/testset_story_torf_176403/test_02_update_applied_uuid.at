@@ -1,0 +1,16 @@
+runLitpScript test_torf_176403_setup.at
+add-plugins plugins/torf_176403
+
+litp create -t lun-disk -p /infrastructure/systems/s1/disks/d1 -o lun_name=hd1 name=sda size=10M storage_container=pool01 bootable=true
+
+litp create_plan
+litp run_plan
+assertState -p /infrastructure/systems/s1/disks/d1 Applied
+
+litp update -p /infrastructure/systems/s1/disks/d1 -o uuid=00:11:22:33:44:55:66:77:88:99:aa:bb:cc:dd:ee:ff
+assertState -p /infrastructure/systems/s1/disks/d1 Updated
+
+litp create_plan
+litp run_plan
+assertState -p /infrastructure/systems/s1/disks/d1 Applied
+assertProperty /infrastructure/systems/s1/disks/d1 -o uuid=00:11:22:33:44:55:66:77:88:99:aa:bb:cc:dd:ee:ff
